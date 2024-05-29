@@ -1,40 +1,32 @@
-
-
 import random, time
 
-number_of_questions = 10
-correct_answers = 0
+def multiplication_quiz(num_questions=10, max_attempts=3, time_limit=8):
+    correct_answers = 0
+    for q_num in range(num_questions):
+        num1, num2 = random.randint(0, 9), random.randint(0, 9)
+        start_time = time.time()
 
-for question_number in range(number_of_questions):
-    
-    num1 = random.randint(0, 9)
-    num2 = random.randint(0, 9)
-    prompt = f'
-
-    start_time = time.time()
-
-    for _ in range(3):
-        while True:
+        for attempt in range(max_attempts):
             try:
-                answer = int(input(prompt))
-                break
-            except:
+                answer = int(input(f'{q_num + 1}: {num1} x {num2} = '))
+            except ValueError:
                 print('整数を入力してください')
+                continue
 
-        elapsed_time = time.time() - start_time
-        if elapsed_time >= 8:
-            print('時間切れ!')
-            break
+            if time.time() - start_time > time_limit:
+                print('時間切れ!')
+                break
 
-        if answer == num1 * num2:
-            print('正解!')
-            correct_answers += 1
-            break
+            if answer == num1 * num2:
+                print('正解!')
+                correct_answers += 1
+                break
+        else:
+            print('回数制限切れ!')
 
-    else:
-        print('回数制限切れ!')
+        time.sleep(1)
 
-    time.sleep(1) 
+    print(f'得点: {correct_answers} / {num_questions}')
 
-print(f'得点: {correct_answers} / {number_of_questions}')
+multiplication_quiz()
 

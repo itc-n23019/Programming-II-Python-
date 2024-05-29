@@ -7,8 +7,4 @@ while True:
     if response == 'いいえ':
         break
 
-
-
-
-
 print('ありがとう、ごきげんよう。')
