@@ -1,23 +1,11 @@
-
-
-import os
-import sys
-import re
+import os, sys, re
 
 if len(sys.argv) < 2:
-    sys.exit('使い方：python findre.py 正規表現パターン')
+    sys.exit('Usage: python findre.py <pattern>')
 
 pattern = re.compile(sys.argv[1])
-
-for filename in os.listdir('./'):
-    if not filename.lower().endswith('.txt'):
-        continue
-    
-    
-    txt_file = open(filename, 'r', encoding='utf-8')
-    for line in txt_file:
-        mo = pattern.search(line)
-        if mo:
-            print(filename, ':',  line, end='')
-    txt_file.close()
-
+for filename in filter(lambda f: f.lower().endswith('.txt'), os.listdir('./')):
+    with open(filename, 'r', encoding='utf-8') as txt_file:
+        for line in txt_file:
+            if pattern.search(line):
+                print(f'{filename}: {line}', end='')
